@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style type="text/css">
+      body {
+        background-color: black;
+      }
+      .contenedor-principal-quiz-tennis {
+        background-color: #fff;
+        width: 90%;
+        max-width: 600px;
+        margin: 100px auto 0;
+        border-radius: 10px;
+        padding: 30px;  
+      }
+      .contendor-preguntas-quiz-tennis {
+        background-color: #fff !important;
+      }
+      .contenedor-principal-quiz-tennis h1{
+        font-weight: 30px;
+        color: #101113;
+        font-weight: 700;
+        border-bottom: 1px solid #333 ;
+        padding-bottom: 30px;
+      }
+    .contendor-preguntas-quiz-tennis{
+        padding: 20px 0;
+    }
+    .contendor-preguntas-quiz-tennis h2{
+        font-size: 18px;
+        color: #101113;
+        font-weight: 700;
+    }
+    .boton-de-respuestas{
+        background: #fff;
+        color: #222;
+        font-weight: 600;
+        width: 100%;
+        border: 1px solid #222;
+        padding: 10px;
+        margin: 10px 0;
+        text-align: left;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.4s;
+    }
+    .boton-de-respuestas:hover{
+        background: #222;
+        color: #fff;
+    }
+    #boton-siguiente-pregunta{
+         background: #101113;
+         color: #fff;
+         font-weight: 600;
+         width: 150px;
+         border: 0;
+         padding: 15px;
+         margin: 20px auto 0;
+         border-radius: 4px;
+         cursor: pointer;
+         display: block;
+    }
+    #boton-anterior-pregunta{
+      background: #101113;
+         color: #fff;
+         font-weight: 600;
+         width: 150px;
+         border: 0;
+         padding: 15px;
+         margin: 20px auto 0;
+         border-radius: 4px;
+         cursor: pointer;
+         display: block;
+    }
+.correct{
+    background: #484e4b;
+}
+.incorrect{
+    background: #484e4b;
+}
+    </style>
+    <div class="espacio-total-background-juego">
+      <div class="contenedor-principal-quiz-tennis">
+        <h1>Juega con Tennis</h1>
+        <div class="contendor-preguntas-quiz-tennis">
+          <h2 id="preguntas-quiz-tennis">Las preguntas van aca</h2>
+          <div id="respuestas-de-las-preguntas">
+            <button class="boton-de-respuestas"> Respuesta 1</button>
+            <button class="boton-de-respuestas"> Respuesta 2</button>
+            <button class="boton-de-respuestas"> Respuesta 3</button>
+            <button class="boton-de-respuestas"> Respuesta 4</button>
+          </div>
+          <button id="boton-anterior-pregunta">Atrás</button>
+          <button id="boton-siguiente-pregunta">Siguiente</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+        const preguntasTennis = [
+          {
+            pregunta: "lorem ipsum dolor sit amet",
+            respuestas: [
+                {text: "lorem ipsum dolor sit amet", correct:false},
+                {text: "lorem ipsum dolor sit amet", correct:false},
+                {text: "lorem ipsum dolor sit amet", correct:false},
+                {text: "lorem ipsum dolor sit amet", correct:true}
+            ]
+          },
+          {
+            pregunta: "lorem ipsum dolor sit amet",
+            respuestas: [
+                {text: "lorem ipsum dolor sit amet", correct:false},
+                {text: "lorem ipsum dolor sit amet", correct:false},
+                {text: "lorem ipsum dolor sit amet", correct:false},
+                {text: "lorem ipsum dolor sit amet", correct:true}
+            ]
+          },
+          {
+            pregunta: "lorem ipsum dolor sit amet",
+            respuestas: [
+                {text: "lorem ipsum dolor sit amet", correct:false},
+                {text: "lorem ipsum dolor sit amet", correct:false},
+                {text: "lorem ipsum dolor sit amet", correct:false},
+                {text: "lorem ipsum dolor sit amet", correct:true}
+            ]
+          },
+          {
+            pregunta: "lorem ipsum dolor sit amet",
+            respuestas: [
+                {text: "lorem ipsum dolor sit amet", correct:false},
+                {text: "lorem ipsum dolor sit amet", correct:false},
+                {text: "lorem ipsum dolor sit amet", correct:false},
+                {text: "lorem ipsum dolor sit amet", correct:true}
+            ]
+          },
+          {
+            pregunta: "lorem ipsum dolor sit amet",
+            respuestas: [
+                {text: "lorem ipsum dolor sit amet", correct:false},
+                {text: "lorem ipsum dolor sit amet", correct:false},
+                {text: "lorem ipsum dolor sit amet", correct:false},
+                {text: "lorem ipsum dolor sit amet", correct:true}
+            ]
+          }
+        ];
+        const preguntasElementos = document.getElementById("preguntas-quiz-tennis");
+    const respuestasElementos = document.getElementById("respuestas-de-las-preguntas");
+    const botonSiguiente = document.getElementById("boton-siguiente-pregunta");
+    const botonAtras = document.getElementById("boton-anterior-pregunta");
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function comenzarQuiz() {
+      currentQuestionIndex = 0;
+      score = 0;
+      botonSiguiente.innerHTML = "Next";
+      showQuestion();
+    }
+
+    function showQuestion() {
+      resetState();
+      const currentQuestion = preguntasTennis[currentQuestionIndex];
+      const primerPregunta = currentQuestionIndex + 1;
+      preguntasElementos.innerHTML = primerPregunta + ". " + currentQuestion.pregunta;
+
+      currentQuestion.respuestas.forEach((respuesta, index) => {
+        const button = document.createElement("button");
+        button.innerHTML = respuesta.text;
+        button.classList.add("boton-de-respuestas");
+        respuestasElementos.appendChild(button);
+        if (respuesta.correct) {
+          button.dataset.correct = respuesta.correct;
+        }
+        button.addEventListener("click", selectAnswer);
+      });
+    }
+
+    function resetState() {
+      botonSiguiente.style.display = "none";
+      botonAtras.style.display = currentQuestionIndex > 0 ? "block" : "none";
+      while (respuestasElementos.firstChild) {
+        respuestasElementos.removeChild(respuestasElementos.firstChild);
+      }
+    }
+
+    function selectAnswer(e) {
+      const selectedBtn = e.target;
+      const isCorrect = selectedBtn.dataset.correct === "true";
+      if (isCorrect) {
+        selectedBtn.classList.add("correct");
+        score++;
+      } else {
+        selectedBtn.classList.add("incorrect");
+      }
+      Array.from(respuestasElementos.children).forEach(button => {
+        if (button.dataset.correct === "true") {
+          button.classList.add("correct");
+        }
+        button.disabled = true;
+      });
+      botonSiguiente.style.display = "block";
+    }
+
+    function showScore() {
+      resetState();
+      let message = "";
+      if (score <= 2) {
+        message = "Has respondido 2 o menos preguntas correctas. ¡Sigue practicando!";
+      } else if (score >= 3 && score <= 4) {
+        message = "Has respondido de 3 a 4 preguntas correctas. ¡Bien hecho!";
+      } else {
+        message = "Has respondido 5 o más preguntas correctas. ¡Excelente trabajo!";
+      }
+      preguntasElementos.innerHTML = `Tu puntaje es ${score} de ${preguntasTennis.length}<br>${message}`;
+      botonSiguiente.innerHTML = "Jugar de nuevo";
+      botonSiguiente.style.display = "block";
+    }
+
+    function handleNextButton() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < preguntasTennis.length) {
+        showQuestion();
+      } else {
+        showScore();
+      }
+    }
+
+    function retrocederPregunta() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        showQuestion();
+      }
+    }
+
+    botonSiguiente.addEventListener("click", () => {
+      if (currentQuestionIndex < preguntasTennis.length) {
+        handleNextButton();
+      } else {
+        comenzarQuiz();
+      }
+    });
+
+    botonAtras.addEventListener("click", () => {
+      retrocederPregunta();
+    });
+
+    comenzarQuiz();
+    </script>
+  </body>
+</html>
