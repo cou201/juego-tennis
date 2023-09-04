@@ -7,8 +7,10 @@
   </head>
   <body>
     <style type="text/css">
-      body {
-        background-color: black;
+      .espacio-total-background-juego {
+        background-image: url("/arquivos/juego-fondo-quiz-tennis.png");
+        background-repeat: no-repeat;
+        background-size: cover;
       }
       .contenedor-principal-quiz-tennis {
         background-color: #fff;
@@ -49,31 +51,36 @@
         cursor: pointer;
         transition: all 0.4s;
     }
-    .boton-de-respuestas:hover{
-        background: #222;
-        color: #fff;
+ 
+    .boton-de-respuestas:hover:not([disabled]){
+     background: #222;
+     color: wheat;
+    }
+    .boton-de-respuestas:disabled{
+      cursor: no-drop !important;
     }
     #boton-siguiente-pregunta{
          background: #101113;
          color: #fff;
          font-weight: 600;
-         width: 150px;
+         width: 350px;
          border: 0;
          padding: 15px;
          margin: 20px auto 0;
-         border-radius: 4px;
+         border-radius: 10px;
          cursor: pointer;
          display: block;
     }
     #boton-anterior-pregunta{
-      background: #101113;
-         color: #fff;
+      background: #fff;
+         color: black;
          font-weight: 600;
          width: 150px;
          border: 0;
          padding: 15px;
          margin: 20px auto 0;
-         border-radius: 4px;
+         border-radius: 10px;
+         border: #101113 solid 2px;
          cursor: pointer;
          display: block;
     }
@@ -83,8 +90,49 @@
 .incorrect{
     background: #484e4b;
 }
+.contenedor-botones-retroceder-siguiente{
+  display: flex
+}
+
+.contenedor-regalo-idea-titulo{
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  width: 44%;
+  margin: 0;
+  top: 0;
+  padding:0;
+  position: relative;
+  left: 28%;
+  border-radius: 20px;
+  margin-bottom: -40px;
+}
+.contenedor-regalo-idea-titulo h1{
+  font-size: 40px !important;
+}
+@media  screen and (max-width: 768px) {
+  .contenedor-regalo-idea-titulo h1{
+    font-size: 21px !important;
+  }
+  .contenedor-regalo-idea-titulo {
+    width: 100%;
+    left: 0 ;
+  }
+}
+.boton-final-resultados-respuestas{
+  text-decoration: none;
+  color: white;
+  display: block;
+  z-index: 99;
+  font-size: 20px;
+}
     </style>
     <div class="espacio-total-background-juego">
+      <div class="contenedor-regalo-idea-titulo">
+        <h1>El regalo ideal</h1>
+      </div>
       <div class="contenedor-principal-quiz-tennis">
         <h1>Juega con Tennis</h1>
         <div class="contendor-preguntas-quiz-tennis">
@@ -95,8 +143,10 @@
             <button class="boton-de-respuestas"> Respuesta 3</button>
             <button class="boton-de-respuestas"> Respuesta 4</button>
           </div>
-          <button id="boton-anterior-pregunta">Atrás</button>
+          <div class="contenedor-botones-retroceder-siguiente">
+            <button id="boton-anterior-pregunta">Atrás</button>
           <button id="boton-siguiente-pregunta">Siguiente</button>
+          </div>
           </div>
         </div>
       </div>
@@ -104,30 +154,57 @@
     <script>
         const preguntasTennis = [
           {
-            pregunta: "lorem ipsum dolor sit amet",
+            pregunta: "Que valora más tu amig@",
             respuestas: [
-                {text: "lorem ipsum dolor sit amet", correct:false},
-                {text: "lorem ipsum dolor sit amet", correct:false},
-                {text: "lorem ipsum dolor sit amet", correct:false},
-                {text: "lorem ipsum dolor sit amet", correct:true}
+                {text: "Un regalo que tenga significado", correct:false},
+                {text: "Entre mas lujoso mejor", correct:false},
+                {text: "Le gusta todo, es super dificil regalarle algo", correct:false},
+                {text: "Que le planees un plan tranqui", correct:true}
+            ]
+          },
+          {
+            pregunta: "Cuando tu amig@ llega a algun lugar",
+            respuestas: [
+                {text: "Llena inmediatamente el espacio con su presencia", correct:false},
+                {text: "Es super sigiloso", correct:false},
+                {text: "Conoce a todo el mundo", correct:false},
+                {text: "No sabe ni donde está parado", correct:true}
+            ]
+          },
+          {
+            pregunta: "¿Qué evento prefiere?",
+            respuestas: [
+                {text: "Una fiesta", correct:false},
+                {text: "Quedarse tranqui en casa", correct:false},
+                {text: "Cualquier lugar, con tal de poder hablar", correct:false},
+                {text: "¡Si a todo!", correct:true}
+            ]
+          },
+          {
+            pregunta: "¿Cuál es su lenguaje de amor?",
+            respuestas: [
+                {text: "Activos al servicio", correct:false},
+                {text: "Contacto fisico", correct:true},
+                {text: "Tiempo de calidad", correct:false},
+                {text: "Regalos", correct:false}
+            ]
+          },
+          {
+            pregunta: "¿Qué valoras más en un regalo?",
+            respuestas: [
+                {text: "Un regalo que tenga significado", correct:false},
+                {text: "Entre mas lujoso mejor", correct:true},
+                {text: "Le gusta todo, es super dificil", correct:false},
+                {text: "Que le planees algo tranqui", correct:false}
             ]
           },
           {
             pregunta: "lorem ipsum dolor sit amet",
             respuestas: [
+                {text: "lorem ipsum dolor sit amet", correct:true},
                 {text: "lorem ipsum dolor sit amet", correct:false},
                 {text: "lorem ipsum dolor sit amet", correct:false},
-                {text: "lorem ipsum dolor sit amet", correct:false},
-                {text: "lorem ipsum dolor sit amet", correct:true}
-            ]
-          },
-          {
-            pregunta: "lorem ipsum dolor sit amet",
-            respuestas: [
-                {text: "lorem ipsum dolor sit amet", correct:false},
-                {text: "lorem ipsum dolor sit amet", correct:false},
-                {text: "lorem ipsum dolor sit amet", correct:false},
-                {text: "lorem ipsum dolor sit amet", correct:true}
+                {text: "lorem ipsum dolor sit amet", correct:false}
             ]
           },
           {
@@ -160,7 +237,7 @@
     function comenzarQuiz() {
       currentQuestionIndex = 0;
       score = 0;
-      botonSiguiente.innerHTML = "Next";
+      botonSiguiente.innerHTML = "Siguiente";
       showQuestion();
     }
 
@@ -183,7 +260,7 @@
     }
 
     function resetState() {
-      botonSiguiente.style.display = "none";
+      botonSiguiente.style.display = "block";
       botonAtras.style.display = currentQuestionIndex > 0 ? "block" : "none";
       while (respuestasElementos.firstChild) {
         respuestasElementos.removeChild(respuestasElementos.firstChild);
@@ -200,29 +277,42 @@
         selectedBtn.classList.add("incorrect");
       }
       Array.from(respuestasElementos.children).forEach(button => {
-        if (button.dataset.correct === "true") {
+        if (button.dataset.correct === "false") {
           button.classList.add("correct");
         }
-        button.disabled = true;
+        button.disabled = false;
       });
       botonSiguiente.style.display = "block";
     }
 
     function showScore() {
-      resetState();
-      let message = "";
-      if (score <= 2) {
-        message = "Has respondido 2 o menos preguntas correctas. ¡Sigue practicando!";
-      } else if (score >= 3 && score <= 4) {
-        message = "Has respondido de 3 a 4 preguntas correctas. ¡Bien hecho!";
-      } else {
-        message = "Has respondido 5 o más preguntas correctas. ¡Excelente trabajo!";
-      }
-      preguntasElementos.innerHTML = `Tu puntaje es ${score} de ${preguntasTennis.length}<br>${message}`;
-      botonSiguiente.innerHTML = "Jugar de nuevo";
-      botonSiguiente.style.display = "block";
-    }
+  resetState();
+  let tituloPeronsalidad = "";
+  let message = "";
+  let resultButton = "";
 
+  if (score <= 2) {
+    tituloPeronsalidad= "Fresc@"
+    message = "Leento pero seguro. Tu amig@ fluye con la vida, la siente y simplemente ama la frescura en sus días, tanto en su forma de vestir como en su forma de vivir";
+    resultButton = '<a href="https://www.tennis.com.co/guia-de-regalos-amor-amistad/fresco" class="boton-final-resultados-respuestas">Ver más</a>';
+  } else if (score >= 3 && score <= 4) {
+    tituloPeronsalidad= "Tradi"
+    message = "Tu amig@ no necesita mucho para llamar la atencion, con su simple presencia llena el espacio. La simpleza y sutileza lo caracterizan... es tan fácil regalarle que cualquiera de estas opciones funcionaria";
+    resultButton = '<a href="https://www.tennis.com.co/guia-de-regalos-amor-amistad/tradi" class="boton-final-resultados-respuestas">Ver más</a>';
+  } else if (score >= 5 && score <= 6){
+    tituloPeronsalidad= "Altern@"
+    message = "De es@s que no les importa el qué le dirán, tu amig@ tiene una personalidad inquebrantable y arrolladora, no necesita decir mucho para que entiendan su verdadera esencia. Aqui te dejamos unas opciones full moda que te pueden funcionar";
+    resultButton = '<a href="https://www.tennis.com.co/guia-de-regalos-amor-amistad/alterno" class="boton-final-resultados-respuestas">Ver más</a>';
+  } else{
+    tituloPeronsalidad= "Toder@"
+    message = "Todos tenemos un amigo que con tal de estar cómodo, se siente perfecto. Tiene la capacidad de usar prendas básicas para todo tipo de ocasiones y logra que funcionen. Aquí unas opciones que seguro le gustarán";
+    resultButton = '<a href="https://www.tennis.com.co/guia-de-regalos-amor-amistad/todero" class="boton-final-resultados-respuestas">Ver más</a>'
+  }
+
+  preguntasElementos.innerHTML = `${tituloPeronsalidad}<br/>${message}`;
+  botonSiguiente.innerHTML = resultButton;
+  botonSiguiente.style.display = "block";
+}
     function handleNextButton() {
       currentQuestionIndex++;
       if (currentQuestionIndex < preguntasTennis.length) {
